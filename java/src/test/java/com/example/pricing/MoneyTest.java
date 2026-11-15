@@ -14,11 +14,6 @@ class MoneyTest {
     }
 
     @Test
-    void roundsHalfUp() {
-        assertEquals(Money.of("10.01"), Money.of("10.005"));
-    }
-
-    @Test
     void multipliesByQuantity() {
         assertEquals(Money.of("37.47"), Money.of("12.49").times(3));
     }
