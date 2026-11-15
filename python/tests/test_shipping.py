@@ -4,16 +4,17 @@ from shopcart import shipping_cost
 from shopcart.money import format_cents, to_cents
 
 
-def test_small_parcel_rate():
-    assert shipping_cost(400, 2000) == 450
-
-
-def test_medium_parcel_rate():
-    assert shipping_cost(1800, 2000) == 790
-
-
-def test_large_parcel_rate():
-    assert shipping_cost(9000, 2000) == 1490
+@pytest.mark.parametrize(
+    ("weight_grams", "expected"),
+    [
+        (400, 450),
+        (1800, 790),
+        (9000, 1490),
+    ],
+    ids=["small", "medium", "large"],
+)
+def test_parcel_rate(weight_grams, expected):
+    assert shipping_cost(weight_grams, 2000) == expected
 
 
 def test_over_parcel_limit():
