@@ -9,6 +9,8 @@ export function slugify(input: string, options: SlugOptions = {}): string {
   const maxLength = options.maxLength ?? 80;
   let slug = input
     .trim()
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
     .replace(/&/g, ' and ')
     .replace(SEPARATORS, '-')

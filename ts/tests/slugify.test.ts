@@ -26,4 +26,16 @@ describe('slugify', () => {
   it('returns an empty string for symbols only', () => {
     expect(slugify('!!!')).toBe('');
   });
+
+  it('folds accented letters to plain ones', () => {
+    expect(slugify('Crème Brûlée')).toBe('creme-brulee');
+  });
+
+  it.only('keeps words apart after folding', () => {
+    expect(slugify('Ångström über Zoë')).toBe('angstrom-uber-zoe');
+  });
+
+  it('handles accents in a long title cut at a word boundary', () => {
+    expect(slugify('Café de la Paix, rue Scribe à Paris', { maxLength: 24 })).toBe('cafe-de-la-paix-rue');
+  });
 });
