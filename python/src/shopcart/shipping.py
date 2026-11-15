@@ -1,4 +1,4 @@
-FREE_SHIPPING_FROM_CENTS = 7500
+FREE_SHIPPING_FROM_CENTS = 10000
 
 # (max weight in grams, price in cents), checked in order
 RATES = [
