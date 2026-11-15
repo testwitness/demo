@@ -53,4 +53,8 @@ class Cart:
         if not self.items:
             return 0
         after_discount = self.subtotal() - self.discount()
-        return after_discount + shipping_cost(self.weight(), after_discount)
+        shipping = shipping_cost(self.weight(), after_discount)
+        if self.coupon and self.coupon.percent_off:
+            # percent coupons now take the same share off shipping
+            shipping -= shipping * self.coupon.percent_off // 100
+        return after_discount + shipping
