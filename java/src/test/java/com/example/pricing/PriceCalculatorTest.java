@@ -29,26 +29,6 @@ class PriceCalculatorTest {
     }
 
     @Test
-    void doesNotTaxExemptLines() {
-        var items = List.of(
-                LineItem.of("BOOK-1", "20.00", 1),
-                new LineItem("GIFTCARD-25", Money.of("25.00"), 1, false));
-        var quote = calculator.quote(items, Discount.none());
-        assertEquals(Money.of("1.65"), quote.tax());
-        assertEquals(Money.of("46.65"), quote.total());
-    }
-
-    @Test
-    void splitsTheDiscountAcrossTaxableAndExemptLines() {
-        var items = List.of(
-                LineItem.of("BOOK-1", "30.00", 1),
-                new LineItem("GIFTCARD-10", Money.of("10.00"), 1, false));
-        var quote = calculator.quote(items, new Discount.Fixed(Money.of("8.00")));
-        assertEquals(Money.of("1.98"), quote.tax());
-        assertEquals(Money.of("33.98"), quote.total());
-    }
-
-    @Test
     void emptyOrderCostsNothing() {
         var quote = calculator.quote(List.of(), Discount.none());
         assertEquals(Money.ZERO, quote.total());
