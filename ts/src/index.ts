@@ -1,3 +1,3 @@
 export { slugify } from './slugify';
 export { parseDateRange, type DateRange } from './dateRange';
-export { truncate } from './truncate';
+export { truncate, truncateMiddle } from './truncate';
