@@ -20,7 +20,8 @@ describe('slugify', () => {
 
   it('cuts long slugs at a word boundary', () => {
     const slug = slugify('the quick brown fox jumps over the lazy dog', { maxLength: 20 });
-    expect(slug).toContain('quick');
+    expect(slug).toBe('the-quick-brown-fox');
+    expect(slug.length).toBeLessThanOrEqual(20);
   });
 
   it('returns an empty string for symbols only', () => {
