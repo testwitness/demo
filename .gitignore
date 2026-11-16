@@ -1,0 +1,14 @@
+# build output
+java/target/
+ts/node_modules/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+
+# test and coverage reports written by CI
+junit.xml
+.coverage
+coverage/
+results/
+testwitness.json
+testwitness.md

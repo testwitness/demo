@@ -1,0 +1,89 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  java:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: java
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "21"
+      - run: mvn --batch-mode --no-transfer-progress test
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: results-java
+          path: java/target/surefire-reports/TEST-*.xml
+          if-no-files-found: warn
+
+  ts:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ts
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+      - run: npm ci
+      - run: npm run test:ci
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: results-ts
+          path: ts/junit.xml
+          if-no-files-found: warn
+
+  python:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: python
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - run: pip install pytest pytest-cov
+      - run: pytest --junitxml=junit.xml
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: results-python
+          path: python/junit.xml
+          if-no-files-found: warn
+
+  testwitness:
+    # Runs on pull requests only, after the three test jobs, even when one of them failed.
+    if: always() && github.event_name == 'pull_request'
+    needs: [java, ts, python]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: results-*
+          path: results
+      - uses: testwitness/testwitness@v0
+        with:
+          results: "results/**/*.xml"
+          # No run history in this demo, so the job needs no actions: read permission.
+          history_artifact: ""

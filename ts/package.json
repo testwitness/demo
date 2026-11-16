@@ -1,0 +1,14 @@
+{
+  "name": "textkit",
+  "version": "0.4.0",
+  "description": "Small text helpers: slugs, date ranges and truncation",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "vitest run",
+    "test:ci": "vitest run --reporter=default --reporter=junit --outputFile.junit=junit.xml"
+  },
+  "devDependencies": {
+    "vitest": "^4.0.0"
+  }
+}

@@ -1,0 +1,13 @@
+[project]
+name = "shopcart"
+version = "0.3.0"
+description = "Cart totals with coupons and shipping for a small online shop"
+requires-python = ">=3.10"
+
+[project.optional-dependencies]
+test = ["pytest>=8", "pytest-cov>=5"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "--cov=shopcart --cov-report=term-missing --cov-fail-under=90"
