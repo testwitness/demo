@@ -4,14 +4,17 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Objects;
 
-/** An amount in one currency, always held to two decimal places. */
+/**
+ * An amount in one currency, always held to two decimal places.
+ * Rounds half to even, the way the payment provider settles amounts.
+ */
 public final class Money implements Comparable<Money> {
     public static final Money ZERO = Money.of("0.00");
 
     private final BigDecimal amount;
 
     private Money(BigDecimal amount) {
-        this.amount = amount.setScale(2, RoundingMode.HALF_UP);
+        this.amount = amount.setScale(2, RoundingMode.HALF_EVEN);
     }
 
     public static Money of(String amount) {
