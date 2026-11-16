@@ -33,7 +33,8 @@ public final class PriceCalculator {
             taxableAfterDiscount = taxableSubtotal.minus(taxableShare);
         }
         Money tax = taxRate.on(taxableAfterDiscount);
-        Money total = subtotal.minus(discountAmount).plus(tax);
+        Money packaging = items.size() == 1 ? Money.of("1.00") : Money.ZERO;
+        Money total = subtotal.minus(discountAmount).plus(tax).plus(packaging);
         return new Quote(subtotal, discountAmount, tax, total);
     }
 
