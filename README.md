@@ -8,7 +8,7 @@ Each pull request below changes a small Java, TypeScript or Python library in on
 |---|---|---|
 | TypeScript: skips the daylight saving test in the date range parser | review: R003, test skipped (medium) | [#1](https://github.com/testwitness/demo/pull/1) |
 | Python: raises the free shipping threshold and marks the test that now fails with `@pytest.mark.xfail` | review: R004, test turned into an expected failure (high) | [#2](https://github.com/testwitness/demo/pull/2) |
-| TypeScript: adds accent folding to `slugify` and leaves an `it.only` on one of the new tests | review: R005, focused test added (high) | [#3](https://github.com/testwitness/demo/pull/3) |
+| TypeScript: adds accent folding to `slugify` and leaves an `it.only` on one of the new tests | review: R005, focused test added (high). The ts CI job is red too, on purpose: Vitest itself fails a file that keeps `.only` when it runs in CI. Jest, Mocha and pytest have no such guard, which is why R005 exists | [#3](https://github.com/testwitness/demo/pull/3) |
 | Python: lets coupons discount shipping and changes `assert total == 1800 + 790` to `assert total is not None` | pass: one low finding, the loosened assertion (A002 reports at low since 0.1.2) | [#4](https://github.com/testwitness/demo/pull/4) |
 | Java: adds a packaging fee and changes `assertEquals(Money.of("43.30"), quote.total())` to `assertNotNull(quote.total())` | pass: one low finding, the loosened assertion (A002 reports at low since 0.1.2) | [#5](https://github.com/testwitness/demo/pull/5) |
 | Java: switches money rounding to half even and deletes the test that checked the old rounding | pass: one low finding listing the deleted test | [#6](https://github.com/testwitness/demo/pull/6) |
